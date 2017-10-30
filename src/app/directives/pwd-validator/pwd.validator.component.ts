@@ -25,13 +25,13 @@ export class PasswordValidatorContainerComponent implements OnInit,  OnChanges {
   canShow:boolean = false;
   isLessThan8Chars:boolean = false;
   isLessThan20Chars:boolean = false;
-  doesLowercaseCharacterExist: boolean = false;
-  doesUppercaseCharacterExist: boolean = false;
-  doesNumberExist: boolean = false;
-  doesSpecialCharacterExist: boolean = false;
-  isCharacterRepeating: boolean = false;
-  isBlankSpace: boolean = true;
-  isUserNameEqual: boolean = false;
+  doesLowercaseCharacterExist:boolean = false;
+  doesUppercaseCharacterExist:boolean = false;
+  doesNumberExist:boolean = false;
+  doesSpecialCharacterExist:boolean = false;
+  isCharacterRepeating:boolean = false;
+  isBlankSpace:boolean = true;
+  isUserNameEqual:boolean = false;
 
   constructor() {
   }
@@ -41,7 +41,7 @@ export class PasswordValidatorContainerComponent implements OnInit,  OnChanges {
   }
 
   ngOnChanges(changes:SimpleChanges) {
-    if (this.pwdValue != undefined ) {
+    if (this.pwdValue != undefined) {
       this.validatePassword();
       this.validatePasswordBasedOnIncludingAtleastOneUppercaseLetter();
       this.validatePasswordBasedOnIncludingAtleastOneLowercaseLetter();
@@ -61,72 +61,36 @@ export class PasswordValidatorContainerComponent implements OnInit,  OnChanges {
   }
 
   validatePasswordBasedOnIncludingAtleastOneUppercaseLetter() {
-    let i:number = 0;
-    let character: any;
-    while (i < this.pwdValue.length){
-      character = this.pwdValue.charAt(i);
-      if (character == character.toUpperCase()) {
-        this.doesUppercaseCharacterExist = true;
-        return;
-      }
-      i++;
-    }
-    this.doesUppercaseCharacterExist = false;
+    let regEx = /^(?=.*[A-Z]).+$/;
+    this.doesUppercaseCharacterExist = regEx.test(this.pwdValue);
   }
 
   validatePasswordBasedOnIncludingAtleastOneLowercaseLetter() {
-    let i:number = 0;
-    let character: any;
-    while (i < this.pwdValue.length){
-      character = this.pwdValue.charAt(i);
-      if (character == character.toLowerCase()) {
-        this.doesLowercaseCharacterExist = true;
-        return;
-      }
-      i++;
-    }
-    this.doesLowercaseCharacterExist = false;
+    let regEx = /^(?=.*[a-z]).+$/;
+    this.doesLowercaseCharacterExist = regEx.test(this.pwdValue);
   }
 
   validatePasswordBasedOnIncludingAtleastOneNumber() {
-    let i:number = 0;
-    let character: any;
-    while (i < this.pwdValue.length){
-      character = this.pwdValue.charAt(i);
-      if (!isNaN(character)) {
-        this.doesNumberExist = true;
-        return;
-      }
-      i++;
-    }
-    this.doesNumberExist = false;
+    let regEx = /^(?=.*[0-9]).+$/;
+    this.doesNumberExist = regEx.test(this.pwdValue);
   }
 
   validatePasswordBasedOnIncludingAtleastOneSpecialCharacter() {
-    let specialCharacters: string = '$!@%*&';
-    let i:number = 0;
-    let character: any;
-    while (i < this.pwdValue.length){
-      character = this.pwdValue.charAt(i);
-      if (specialCharacters.indexOf(character) != -1) {
-        this.doesSpecialCharacterExist = true;
-        return;
-      }
-      i++;
-    }
-    this.doesSpecialCharacterExist = false;
+    let specialCharacters:string = '$!@%*&';
+    let regEx = /^(?=.*[$!@%*&]).+$/;
+    this.doesSpecialCharacterExist = regEx.test(this.pwdValue);
 
   }
 
   validatePasswordBasedOnNotRepeatingCharacterMoreThan4Times() {
-    for(var i=0; i<this.pwdValue.length; i++) {
+    for (var i = 0; i < this.pwdValue.length; i++) {
       var count = 0;
-      for(var j=1; j<this.pwdValue.length; j++) {
-        if(this.pwdValue[i] === this.pwdValue[j]) {
+      for (var j = 1; j < this.pwdValue.length; j++) {
+        if (this.pwdValue[i] === this.pwdValue[j]) {
           count++;
         }
       }
-      if(count > 3) {
+      if (count > 3) {
         this.isCharacterRepeating = false;
         return;
       }
@@ -135,7 +99,7 @@ export class PasswordValidatorContainerComponent implements OnInit,  OnChanges {
   }
 
   validatePasswordBasedOnNotIncludingBlankSpaces() {
-    if(this.pwdValue.indexOf(' ') >= 0) {
+    if (this.pwdValue.indexOf(' ') >= 0) {
       this.isBlankSpace = false;
     } else {
       this.isBlankSpace = true;

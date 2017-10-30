@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { PopoverModule } from 'ngx-bootstrap';
+
 
 import { AppComponent } from './app.component';
 import {PasswordValidatorContainerComponent} from "./directives/pwd-validator/pwd.validator.component";
@@ -10,7 +12,8 @@ import {PasswordValidatorContainerComponent} from "./directives/pwd-validator/pw
     PasswordValidatorContainerComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    PopoverModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
